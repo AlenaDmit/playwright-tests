@@ -77,6 +77,8 @@ const elements: Elements[] = [
   },
 ];
 
+const ligtMods = ['light', 'dark'];
+
 test.describe('main page tests', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('https://playwright.dev/');
@@ -115,5 +117,14 @@ test.describe('main page tests', () => {
   test('check light mode switch', async ({ page }) => {
     await page.getByRole('button', { name: 'Switch between dark and light' }).click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  });
+
+  ligtMods.forEach((value) => {
+    test(`check active ${value} theme mode styles`, async ({ page }) => {
+      await page.evaluate((value) => {
+        document.querySelector('html')?.setAttribute('data-theme', value);
+      }, value);
+      await expect(page).toHaveScreenshot(`pageWith${value}Mode.png`);
+    });
   });
 });
