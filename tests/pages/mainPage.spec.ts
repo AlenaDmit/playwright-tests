@@ -1,27 +1,20 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect } from '../fixtures/mainPage';
 import { MainPage } from '../models/MainPage';
 
-let mainPage: MainPage;
-
 test.describe('main page tests', () => {
-  test.beforeEach(async ({ page }) => {
-    mainPage = new MainPage(page);
-    await mainPage.openMainPage();
-  });
-
-  test('check visibility of navs elements', async () => {
+  test('check visibility of navs elements', async ({ mainPage }) => {
     await mainPage.checkElementsVisibility();
   });
 
-  test('check names of navs elements', async () => {
+  test('check names of navs elements', async ({ mainPage }) => {
     await mainPage.checkElementsText();
   });
 
-  test('check href attributes of navs elements', async () => {
+  test('check href attributes of navs elements', async ({ mainPage }) => {
     await mainPage.checkElementsHrefAttribute();
   });
 
-  test('check light mode switch', async () => {
+  test('check light mode switch', async ({ mainPage }) => {
     await test.step('light mode icon switch click', async () => {
       await mainPage.clickSwitchLightModeIcon();
     });
@@ -30,7 +23,7 @@ test.describe('main page tests', () => {
     });
   });
 
-  test(`check light theme mode style`, async () => {
+  test(`check light theme mode style`, async ({ mainPage }) => {
     await test.step('set light mode', async () => {
       await mainPage.setLightMode();
     });
@@ -39,7 +32,7 @@ test.describe('main page tests', () => {
     });
   });
 
-  test(`check dark theme mode style`, async () => {
+  test(`check dark theme mode style`, async ({ mainPage }) => {
     await test.step('set dark mode', async () => {
       await mainPage.setDarkMode();
     });
